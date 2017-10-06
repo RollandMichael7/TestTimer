@@ -77,7 +77,7 @@
         // Increment question number
         questionNum++;
         // Add the amount of time saved during last question to question
-        qTime = Math.round(quotient) + extraTime;
+        qTime = Math.round(secondsPerQuestion) + extraTime;
         // Once all questions are answered, end timer.
         if (questionNum > numQuestions) {
             endTimer();
@@ -100,9 +100,9 @@
     // End the timer and display how much time was left, or how late the test taker was.
     var endTimer = function() {
         if (qTime > 0)
-            document.getElementById("timeleft").innerHTML = "Test's over! With         " + qTime + " second(s) left to spare!";
+            document.getElementById("timeleft").innerHTML = "Test's over! With " + qTime + " second(s) left to spare!";
         else
-            document.getElementById("timeleft").innerHTML = "Test's over! You         took " + (qTime*-1) + " seconds too long!"
+            document.getElementById("timeleft").innerHTML = "Test's over! You took " + (qTime*-1) + " seconds too long!"
         window.clearInterval(timerID);
     }
 
@@ -116,9 +116,9 @@
     // Displays how much time is left for the question, or how many seconds ago the question was "over".
     var displayTime = function(isPositive) {
         if (isPositive)
-            document.getElementById("timeleft").innerHTML = qTime + " seconds         left for question " + questionNum;   
+            document.getElementById("timeleft").innerHTML = qTime + " seconds left for question " + questionNum;   
         else 
-            document.getElementById("timeleft").innerHTML = "Should've                finished question " + questionNum + " " + (qTime*-1) + " seconds          ago!";
+            document.getElementById("timeleft").innerHTML = "Should've finished question " + questionNum + " " + (qTime*-1) + " seconds          ago!";
     }
 	</script>
 </head>
