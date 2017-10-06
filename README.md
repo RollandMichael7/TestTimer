@@ -5,4 +5,4 @@ is answered, the amount of time left over (or the defecit of time gone over) is 
 pausing/resuming, resetting with new input, and displays the amount of time left (positive or negative) once all questions have been 
 answered. Written in HTML, CSS, and JavaScript entirely by me.
 
-v17.08.27
+v17.10.05
