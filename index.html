@@ -2,149 +2,166 @@
 <html>
 <head>
 	<style>
-    	#body {
-        font-family: "Consolas", "Lucida Console", monospace; 
-    } #button {
-        display: block;
-        margin: auto;
-        margin-top: 75px;
-        width: 175px;
-        height: 60px;
-        font-size: 2.5em;
-        font-family: "Consolas", "Lucida Console", monospace;
-    } #timeleft, #currenttime, #results {
-        text-align: center;
-        font-size: 2em;
-    } .questions {
-        text-align: center;
-    } #answer {
-        margin: auto;
-        margin-top: 75px;
-        font-size: 1.5em;
-        font-family: "Consolas", "Lucida Console", monospace;
-        display: block;
-    } #copyright {
-        color: grey;
-        font-size: .75em;
-        position: fixed;
-        bottom: 0px;
-        text-align: left; }
-  </style>
-	<script>
-    var questionNum = 1; var extraTime = 0; var timerID; var qTime = 0;
-    var paused = false;
-
-    var numQuestions; var time; var secondsPerQuestion;
-
-    // Function to "tick" the timer
-    var decrease = function() {
-        // Decrement the amount of time left
-        qTime--;
-        // The "extra time" added to next question's timer is current question's time (can be negative).
-        extraTime = qTime;
-        // Display how much time is left or how long ago the question was "over".
-        if (qTime < 0)
-            displayTime(false);
-        else
-            displayTime(true);
-        // If the last question was answered, end timer
-        if (questionNum > numQuestions) {
-            endTimer();
-        }
-    }
-
-    // Function to set up the timer
-    var reset = function() {
-        // Stop the timer, and reset the pause/play button.
-        window.clearInterval(timerID);
-        paused = false;
-        document.getElementById("pauseButton").value="Pause";
-        // Fetch number of questions & time and calculate time/question
-        fetchData();
-        // Start at question 1
-        questionNum = 1;
-        // Display time per question
-        var results = secondsPerQuestion + " second(s) per question!";
-        document.getElementById("results").innerHTML = results;
-        // Set the global variable to the calculated time/question
-        qTime = Math.round(secondsPerQuestion);
-        // Begin the "ticking" (call decrease() every second)
-        timerID = window.setInterval(decrease, 1000);
-    } 
-
-    // Move on to next question
-    var answer = function() {
-        // Increment question number
-        questionNum++;
-        // Add the amount of time saved during last question to question
-        qTime = Math.round(secondsPerQuestion) + extraTime;
-        // Once all questions are answered, end timer.
-        if (questionNum > numQuestions) {
-            endTimer();
-        }
-    }
-
-    // Pause or resume the timer, and change the button's label accordingly.
-    var pauseTimer = function() {
-        if (paused) {
-            timerID = window.setInterval(decrease, 1000);
-            document.getElementById("pauseButton").value="Pause";
-        }
-        else {
-            window.clearInterval(timerID);
-            document.getElementById("pauseButton").value="Resume";
-        }
-        paused = !paused;
-    };
-
-    // End the timer and display how much time was left, or how late the test taker was.
-    var endTimer = function() {
-        if (qTime > 0)
-            document.getElementById("timeleft").innerHTML = "Test's over! With " + qTime + " second(s) left to spare!";
-        else
-            document.getElementById("timeleft").innerHTML = "Test's over! You took " + (qTime*-1) + " seconds too long!"
-        window.clearInterval(timerID);
-    }
-
-    // Fetch data from the user's input and determine the time/question quotient in seconds.
-    var fetchData = function() {
-        numQuestions = document.getElementById("questions").value;
-        time = document.getElementById("time").value;
-        secondsPerQuestion = Math.round((time / numQuestions) * 100) / 100 * 60;
-    }
-
-    // Displays how much time is left for the question, or how many seconds ago the question was "over".
-    var displayTime = function(isPositive) {
-        if (isPositive)
-            document.getElementById("timeleft").innerHTML = qTime + " seconds left for question " + questionNum;   
-        else 
-            document.getElementById("timeleft").innerHTML = "Should've finished question " + questionNum + " " + (qTime*-1) + " seconds          ago!";
-    }
-	</script>
+		body {
+			font-family: "Consolas", "Lucida Console", monospace; 
+			background-color: azure;
+			padding: 30px;
+			text-align: center;
+		} li, ul, h2 {
+			text-align: left;
+		} .bigButton {
+			border-color: blue;
+			background-color: #f0f0ff;
+			display: block;
+			margin: auto;
+			margin-top: 75px;
+			width: 175px;
+			height: 60px;
+			font-size: 2.5em;
+			font-family: "Consolas", "Lucida Console", monospace;
+		} #pauseButton {
+			border-color: blue;   
+			background-color: #f0f0ff;
+		} #timeleft, #currenttime, #results {
+			text-align: center;
+			font-size: 2em;
+		} #answer {
+			border-color: blue;
+			background-color: #f0f0ff;
+			margin: auto;
+			font-size: 1.5em;
+			font-family: "Consolas", "Lucida Console", monospace;
+			display: block;
+		} #copyright {
+			color: grey;
+			font-size: .75em;
+			position: fixed;
+			bottom: 0px;
+			text-align: left; 
+		}
+	</style>
 </head>
 <body>
-<div id="body">
-    <fieldset id="fieldset">
-    <legend><b>TestTimer9000</sup></b></legend>
-    <div class="questions">
-        <center>
-        <p>Questions: </p>
-        <input type="number" id="questions" size>
-        <p> Time in minutes: </p>
-        <input type="number" id="time" align="right">
-        </center>
-    </div>
+    <h1> TestTimer9000 </h1>
+    <ul><strong>Instructions:</strong></ul>
+        <li> Enter number of questions. </li>
+        <li> Enter time in minutes. </li>
+        <li> Hit start! </li>
+        <li> The timer will count down how much time you have for
+        each question. </li>
+        <li> At any time, hit the "Pause" button to, you guessed it, pause the timer. </li>
+        <li> After answering a question, hit the "Question Answered" button and <br> your leftover time will be reimbursed. </br></li>
+        <li> Once all questions are answered, the amount of time left will be displayed. </li>
+    </ul>
+    <fieldset>
+		<legend><b>TestTimer9000</b></legend>
+		<div class="questions">
+			<center>
+			<p>Questions: </p>
+			<input type="number" id="questions" size>
+			<p> Time in minutes: </p>
+			<input type="number" id="time" align="right">
+			</center>
+		</div>
     </fieldset>
-<input type="button" value="Start" onclick="reset()" id="button">
-<br> <center> <input type="button" value="Pause" onclick="pauseTimer()" id="pauseButton"> </br> </center>
-</div>
-<div>
-    <p id="results"> </p>
-    <p id="currenttime"> </p>
-    <p id="timeleft"> </p>
-    <input type="button" value="Question Answered" id="answer" onclick="answer()">
-    <p id="copyright"> Michael Rolland v17.10.05</p>
-</div>
-</div>
+	<input type="button" value="Start" onclick="reset()" class="bigButton">
+	<br> <center> <input type="button" value="Pause" onclick="pauseTimer()" id="pauseButton"> </br> </center>
+	<p id="results"> </p>
+	<p id="currenttime"> </p>
+	<p id="timeleft"> </p>
+	<input type="button" value="Question Answered" id="answer" onclick="answer()">
+	<p id="copyright"> Michael Rolland v17.10.10</p>
+	
+	<script>
+		var questionNum = 1; var extraTime = 0; var timerID; var qTime = 0;
+		var paused = false;
+
+		var numQuestions; var time; var secondsPerQuestion;
+
+		// Function to "tick" the timer
+		var decrease = function() {
+			// Decrement the amount of time left
+			qTime--;
+			// The "extra time" added to next question's timer is current question's time (can be negative).
+			extraTime = qTime;
+			// Display how much time is left or how long ago the question was "over".
+			if (qTime < 0)
+				displayTime(false);
+			else
+				displayTime(true);
+			// If the last question was answered, end timer
+			if (questionNum > numQuestions) {
+				endTimer();
+			}
+		}
+
+		// Function to set up the timer
+		var reset = function() {
+			// Stop the timer, and reset the pause/play button.
+			window.clearInterval(timerID);
+			paused = false;
+			document.getElementById("pauseButton").value="Pause";
+			// Fetch number of questions & time and calculate time/question
+			fetchData();
+			// Start at question 1
+			questionNum = 1;
+			// Display time per question
+			var results = secondsPerQuestion + " second(s) per question!";
+			document.getElementById("results").innerHTML = results;
+			// Set the global variable to the calculated time/question
+			qTime = Math.round(secondsPerQuestion);
+			// Begin the "ticking" (call decrease() every second)
+			timerID = window.setInterval(decrease, 1000);
+		} 
+
+		// Move on to next question
+		var answer = function() {
+			// Increment question number
+			questionNum++;
+			// Add the amount of time saved during last question to question
+			qTime = Math.round(secondsPerQuestion) + extraTime;
+			// Once all questions are answered, end timer.
+			if (questionNum > numQuestions) {
+				endTimer();
+			}
+		}
+
+		// Pause or resume the timer, and change the button's label accordingly.
+		var pauseTimer = function() {
+			if (paused) {
+				timerID = window.setInterval(decrease, 1000);
+				document.getElementById("pauseButton").value="Pause";
+			}
+			else {
+				window.clearInterval(timerID);
+				document.getElementById("pauseButton").value="Resume";
+			}
+			paused = !paused;
+		};
+
+		// End the timer and display how much time was left, or how late the test taker was.
+		var endTimer = function() {
+			if (qTime > 0)
+				document.getElementById("timeleft").innerHTML = "Test's over! With         " + qTime + " second(s) left to spare!";
+			else
+				document.getElementById("timeleft").innerHTML = "Test's over! You         took " + (qTime*-1) + " seconds too long!"
+			window.clearInterval(timerID);
+		}
+
+		// Fetch data from the user's input and determine the time/question quotient in seconds.
+		var fetchData = function() {
+			numQuestions = document.getElementById("questions").value;
+			time = document.getElementById("time").value;
+			secondsPerQuestion = Math.round((time / numQuestions) * 100) / 100 * 60;
+		}
+
+		// Displays how much time is left for the question, or how many seconds ago the question was "over".
+		var displayTime = function(isPositive) {
+			if (isPositive)
+				document.getElementById("timeleft").innerHTML = qTime + " seconds         left for question " + questionNum;   
+			else 
+				document.getElementById("timeleft").innerHTML = "Should've                finished question " + questionNum + " " + (qTime*-1) + " seconds          ago!";
+		}
+	</script>
 </body>
 </html>
