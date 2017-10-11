@@ -3,28 +3,34 @@
 <head>
 	<style>
 		body {
+			color: white; 
+			background-image: linear-gradient(90deg, #155799, #159957);
+			text-shadow:  -1px 1px black,
+						  1px -1px black,
+						  -1px -1px black,
+						  1px 1px black;
 			font-family: "Consolas", "Lucida Console", monospace; 
-			background-color: azure;
 			padding: 30px;
 			text-align: center;
-		} li, ul, h2 {
+		}
+		li, ul, h2 {
 			text-align: left;
-		} .bigButton {
+		} 
+		.bigButton {
+			color: white;
+			text-shadow:  -1px 1px black,
+						  1px -1px black,
+						  -1px -1px black,
+						  1px 1px black;
 			border-color: blue;
-			background-color: #f0f0ff;
+			background-image: linear-gradient(180deg, #155799, #159957);
 			display: block;
-			margin-top: 75px;
-			margin-left: auto;
-			margin-right: auto;
-			width: auto;
-			height: auto;
+			margin: auto;
 			font-size: 2.0em;
 			font-family: "Consolas", "Lucida Console", monospace;
-		} #pauseButton {
-			border-color: blue;   
-			background-color: #f0f0ff;
-		} .bigButton:hover, #pauseButton:hover {
-			background-color: white;
+		} 
+		.bigButton:hover {
+			background-image: linear-gradient(180deg, #159957, #155799);
 		} 
 		.centerText {
 			text-align: center;
@@ -62,7 +68,7 @@
 		</div>
     </fieldset>
 	<input type="button" value="Start" onclick="reset()" class="bigButton">
-	<br> <center> <input type="button" value="Pause" onclick="pauseTimer()" id="pauseButton"> </br> </center>
+	<br> <center> <input type="button" class="bigButton" value="Pause" onclick="pauseTimer()" id="pauseButton"> </br> </center>
 	<p id="results" class="centerText"> </p>
 	<p id="currenttime" class="centerText"> </p>
 	<p id="timeleft" class="centerText"> </p>
